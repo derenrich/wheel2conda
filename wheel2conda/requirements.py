@@ -64,6 +64,9 @@ def eval_env_marker(s, python_version, platform, bitness):
     codeobj = compile(expr, '<environment_marker', 'eval')
     return eval(codeobj)
 
+req_map = dict()
+req_map['sklearn'] = 'scikit-learn'
+
 def requires_dist_to_conda_requirements(reqs, python_version, platform, bitness):
     res = []
     for r in reqs:
@@ -73,10 +76,10 @@ def requires_dist_to_conda_requirements(reqs, python_version, platform, bitness)
         else:
             applicable = True
         if applicable:
-            res.append(r.replace('(', '').replace(')', ''))
-
+            r = r.replace('(', '').replace(')', '')
+            if r in req_map:
+                r = req_map[r]            
+            res.append(r)
     return res
 
-# TODO: We're assuming that conda packages have the same name as PyPI distributions.
-# This is mostly true, but it doesn't have to be. We may want some way to map
-# them.
+

@@ -34,13 +34,9 @@ if __name__ == '__main__':
 
 PREFIX = '/opt/anaconda1anaconda2anaconda3'
 
-PYTHON_VERSIONS = ['3.5', '3.4', '2.7']
+PYTHON_VERSIONS = ['2.7']
 PLATFORM_PAIRS = [
-    (Platform.linux, '64'),
-    (Platform.linux, '32'),
-    (Platform.osx, '64'),
-    (Platform.win, '64'),
-    (Platform.win, '32'),
+    (Platform.linux, '64')
 ]
 
 class CaseSensitiveContextParser(configparser.ConfigParser):
@@ -151,13 +147,13 @@ class PackageBuilder:
 
     def _add_data_dir(self, tf, src):
         for d in src.iterdir():
-            if d.name == 'data':
-                for f in d.iterdir():
-                    tf.add(str(f), arcname=f.name)
-                    self.record_file_or_dir(f.name, f)
+            #if d.name == 'data':
+            for f in d.iterdir():
+                tf.add(str(f), arcname=f.name)
+                self.record_file_or_dir(f.name, f)
 
-            else:
-                raise NotImplementedError('%s under data dir' % d.name)
+            #else:
+            #    raise NotImplementedError('%s under data dir' % d.name)
 
     def _py_record_file(self, relpath, contents):
         h = hashlib.sha256(contents)

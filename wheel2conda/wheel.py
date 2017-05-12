@@ -12,10 +12,14 @@ def _read_metadata(path):
         for line in f:
             if not line.strip():
                 break
-            k, v = line.strip().split(':', 1)
-            k = k.strip()
-            v = v.strip()
-            res[k].append(v)
+            try:
+                k, v = line.strip().split(':', 1)
+                k = k.strip()
+                v = v.strip()
+                res[k].append(v)
+            except ValueError:
+                pass # failure to parse line
+                
 
     return dict(res)
 
@@ -60,8 +64,6 @@ class WheelContents:
         wheel_metadata = _read_metadata(dist_info / 'WHEEL')
         if wheel_metadata['Wheel-Version'][0] != '1.0':
             raise BadWheelError("wheel2conda only knows about wheel format 1.0")
-        if wheel_metadata['Root-Is-Purelib'][0].lower() != 'true':
-            raise BadWheelError("Can't currently autoconvert packages with platlib")
 
         for field in ('Name', 'Version'):
             if field not in self.metadata:

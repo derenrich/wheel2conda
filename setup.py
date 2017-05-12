@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='wheel2conda',
-      version='0.1.palantir',
+      version='0.1+palantir',
       description='Python Distribution Utilities',
       author='Thomas Kluyver',
       author_email='thomas@kluyver.me.uk',

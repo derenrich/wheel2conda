@@ -9,8 +9,6 @@ setup(name='wheel2conda',
       packages=['wheel2conda'],
       entry_points={
           'console_scripts' : ['wheel2conda=wheel2conda:main']
-      },
-      install_requires = ['win_cli_launchers']
-      
+      }      
      )
 

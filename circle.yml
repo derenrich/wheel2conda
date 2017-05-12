@@ -1,0 +1,28 @@
+machine:
+  python:
+    version: 3.6.0
+  environment:
+    TERM: dumb
+
+dependencies:
+  pre:
+    - pip install tox
+
+compile:
+  override:
+    - scripts/build.sh
+  post:
+    - mkdir -p $CIRCLE_ARTIFACTS/wheel
+    - cp build/wheel/*whl $CIRCLE_ARTIFACTS/wheel
+    
+test:
+  override:
+    - "true"
+
+deployment:
+  master:
+    tag: /[0-9]+(\.[0-9]+)+(-[a-zA-Z]+[0-9]*)*/    
+    owner: DeltaSierra
+    commands:
+      - scripts/publish.sh
+

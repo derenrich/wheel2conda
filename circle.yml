@@ -5,15 +5,16 @@ machine:
     TERM: dumb
 
 dependencies:
-  pre:
-    - pip install tox wheel
-
-compile:
   override:
     - scripts/build.sh
+    - python setup.py install
+
   post:
     - mkdir -p $CIRCLE_ARTIFACTS/wheel
-    - cp build/wheel/*whl $CIRCLE_ARTIFACTS/wheel
+    - cp build/wheel/*whl $CIRCLE_ARTIFACTS/wheel  
+
+  pre:
+    - pip install tox wheel
     
 test:
   override:
